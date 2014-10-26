@@ -1,0 +1,24 @@
+		<div class="header">Cards</div>
+		<div class="top-menu">
+			<a href="#" id="btn-back-dic" class="btn btn-default">
+				<span class="glyphicon glyphicon-chevron-left"></span>Back
+			</a>
+			<a href="#" id="btn-add-card" class="btn btn-primary">Add...</a>
+			<a href="#" id="btn-learn-dic" class="btn btn-default">Learn</a>
+			<a href="#" id="btn-reset-dic" class="btn btn-default">Reset</a>
+		</div>
+		<ul id="cards">
+		<% _.each(cards, function(card, idx) { %>
+			<li class="card-item" learnt="<%=card.get("learnt")%>" data-card-id="<%=card.get("_id")%>">
+				<div>
+					<span class="main-text"><%=idx+1%>. <%=card.get("word")%></span>
+					<a href="#" style="position : absolute; right: 45px; top: 0px;" class="btn btn-default" name="edit-card" data-card-id="<%=card.get("_id")%>">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</a>
+					<a href="#" style="position : absolute; right: 0px; top: 0px;" class="btn btn-danger" style="float: right;" name="delete-card" data-card-id="<%=card.get("_id")%>">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
+				</div>
+			</li>
+		<% }); %>
+		</ul>

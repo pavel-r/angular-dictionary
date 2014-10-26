@@ -1,0 +1,104 @@
+	html, body {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		background: none repeat scroll 0 0 #EEEEEE;
+		color: #333333;
+		font: 14px/1.4em "Helvetica Neue",Helvetica,Arial,sans-serif;
+		margin: 0 auto;
+		/*width: 720px;*/
+	}
+	.header{
+		font-size: 30px;
+		margin-bottom: 15px;
+		text-align: center;
+	}
+	.top-menu{
+		padding: 5px;
+		margin-bottom: 5px;
+		border-bottom: 1px solid #cccccc;
+	}
+	.bottom-menu{
+		padding: 5px;
+		margin-top: 5px;
+		border-top: 1px solid #cccccc;
+	}
+	label{
+		display: block;
+	}
+	ul {
+		list-style: none outside none;
+		padding: 0;
+	}
+	input[type=text], input[type=password]{
+		margin : 0 0 5px 0;
+		line-height: 25px;
+		width: 220px;
+	}
+	li.dic-item, li.card-item{
+		padding: 5px;
+		min-height: 45px;
+		border-bottom: 1px solid #cccccc;
+		position: relative;
+		cursor: pointer;
+	}
+	li[learnt=true]{
+		background-color: #DEEEAE;
+	}
+	li div{
+		position: relative;
+		padding-left: 0px; 
+		padding-right: 90px;
+	}
+	span.main-text{
+		font-size: 20px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		display: block;
+		width: 100%;
+		line-height: 30px;
+	}
+	#word-container{
+		min-height: 70px;
+		padding: 5px;
+		margin-top: 10px;
+		border-bottom: 1px solid #cccccc;
+	}
+	#tr-container{
+		padding: 5px;
+		margin-bottom: 10px;
+		min-height: 70px;
+		cursor: pointer;
+	}
+	#flipcardsapp, #loginBox {
+		background: none repeat scroll 0 0 #FFFFFF;
+		border-radius: 0 0 5px 5px;
+		box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+		/*margin-bottom: 40px;*/
+		padding: 20px;
+		max-width: 720px;
+	}
+	#dic-list {
+		list-style: none outside none;
+		margin: 10px 0;
+		padding: 0;
+	}
+	#dic-list li {
+		border-bottom: 1px solid #CCCCCC;
+		font-size: 24px;
+		padding: 18px 20px 18px 0;
+		position: relative;
+	}
+	#dic-list li .edit-dic {
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 15px;
+	}
+	#card-list li {
+		font-size: 20px;
+		padding: 18px 20px 18px 0;
+		position: relative;
+	}

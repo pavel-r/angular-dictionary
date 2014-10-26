@@ -1,0 +1,29 @@
+{
+  "name": "dictionary",
+  "version": "0.0.1",
+  "description": "a sample dictionaty node.js app for heroku",
+  "main": "web.js",
+  "scripts": {
+    "start" : "node web.js",
+	"postinstall" : "grunt"
+  },
+  "dependencies": {
+    "express": "~3.4.x",
+    "grunt": "~0.4.1",
+    "grunt-cli" : "*",
+    "grunt-contrib-jst": "~0.5.0",
+    "mongodb": "*",
+	"bower": "*",
+	"grunt-bower-task": "*"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pavel-r/dictionary"
+  },
+  "author": "Pavel Rabetski",
+  "license": "MIT"
+}

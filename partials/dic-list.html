@@ -1,0 +1,20 @@
+<div class="header">Dictionaries</div>
+<ul id="dictionaries">
+				<li class="dic-item" ng-repeat="dic in dics">
+					<div>
+						<span class="main-text">{{dic.name}}</span>
+						<button style="position : absolute; right: 45px; top: 0px;" class="btn btn-default" name="edit-dic" data-dic-id="{{dic.id}}">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button>
+						<button style="position : absolute; right: 0px; top: 0px;" class="btn btn-danger" style="float: right;" name="delete-dic" data-dic-id="{{dic.id}}">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</div>
+				</li>
+</ul>
+<div>
+				<input type="text" id="dic-name">
+				<a href="#" id="btn-add-dic" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span>Add
+				</a>
+</div>

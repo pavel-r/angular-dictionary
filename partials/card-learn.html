@@ -1,0 +1,17 @@
+		<div class="header">Learning dictionary</div>
+		<input type="hidden" id="card-id" value="<%=card.get("_id")%>"/>
+		<div class="top-menu">
+			<a href="#" id="btn-back-learn" class="btn btn-default">
+				<span class="glyphicon glyphicon-chevron-left"></span>Back
+			</a>
+			<a href="#" id="btn-detailed-tr" class="btn btn-default">Translate</a>
+			<span style="float: right; font-size: 20px;">Card <%=idx%></span>
+		</div>
+		<div id="word-container"><span class="main-text"><%=card.get("word")%><span></div>
+		<div id="tr-container"><span id="translation" style="visibility: hidden;" class="main-text"><%=card.get("translation")%></span></div>
+		<div class="bottom-menu">
+			<a href="#" id="learn-card" class="btn btn-primary">Learnt</a>
+			<a href="#" id="next-card" class="btn btn-default">Next</a>
+		</div>
+		<div id="dicTranslation">
+		</div>
