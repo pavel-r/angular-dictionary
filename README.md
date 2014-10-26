@@ -1,2 +1,1 @@
-angular-dictionary
-==================
+angular-dictionary project
