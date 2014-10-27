@@ -1,18 +1,18 @@
 		<div class="header">Add/Edit card</div>
 		<div class="top-menu">
-			<a href="#" id="btn-back-card" class="btn btn-default">
+			<a href="#/dics/{{dicId}}/cards" id="btn-back-card" class="btn btn-default">
 				<span class="glyphicon glyphicon-chevron-left"></span>Back
 			</a>		
-			<a href="#" id="btn-save-card" class="btn btn-primary">Save</a>
+			<button ng-click="saveCard()" id="btn-save-card" class="btn btn-primary">Save</button>
 			<a href="#" id="btn-tr-card" class="btn btn-default">Translate</a>
 		</div>
 		<div id="card" style="">
 			<label for="word">Word</label> 
-			<input type="text" id="word" name="word" value="<%=card.get("word")%>"/>
+			<input type="text" id="word" name="word" ng-model="card.word"/>
 			<label for="translation">Translation</label>
-			<input type="text" id="translation" name="translation" value="<%=card.get("translation")%>"/>
+			<input type="text" id="translation" name="translation" ng-model="card.translation"/>
 			<label for="sound">Sound</label>
-			<input type="text" id="sound" name="sound" value="<%=card.get("sound")%>"/>
+			<input type="text" id="sound" name="sound" ng-model="card.sound"/>
 		</div>
 		<div id="dicTranslation">
 		</div>
