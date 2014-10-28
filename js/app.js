@@ -10,9 +10,17 @@ dicApp.config(function($routeProvider){
 			templateUrl: 'partials/card-list.html',
 			controller: 'CardListCtrl'
 		}).
-		when('/dics/:dicId/cards/edit',{
+		when('/dics/:dicId/learn',{
+			templateUrl: 'partials/card-learn.html',
+			controller: 'CardLearnCtrl'
+		}).
+		when('/dics/:dicId/cards/edit/:cardId',{
 			templateUrl: 'partials/card-edit.html',
 			controller: 'CardEditCtrl'
+		}).
+		when('/dics/:dicId/cards/new',{
+			templateUrl: 'partials/card-edit.html',
+			controller: 'CardAddCtrl'
 		}).
 		otherwise({
 			redirectTo: '/dics'

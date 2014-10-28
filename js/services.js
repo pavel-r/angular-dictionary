@@ -16,11 +16,20 @@ dicServices.factory('Dic', function($http){
 
 dicServices.factory('Card', function($http){
 	return {
+		get: function(id, dicId){
+			return $http.get('dictionaries/' + dicId + '/cards/' + id);
+		},
 		getByDicId: function(dicId){
-			return $http.get('dictionaries/'+dicId+'/cards');
+			return $http.get('dictionaries/' + dicId + '/cards');
 		},
 		save: function(card){
 			return $http.post('dictionaries/+' + card.dictionary_id + '/cards', card);
+		},
+		update: function(id, card){
+			return $http.put('dictionaries/+' + card.dictionary_id + '/cards/' + id, card);
+		},
+		delete: function(id, dicId){
+			return $http.delete('dictionaries/+' + dicId + '/cards/' + id);
 		}
 	};
 });

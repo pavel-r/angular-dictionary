@@ -3,7 +3,7 @@
 			<a href="#/dics" id="btn-back-dic" class="btn btn-default">
 				<span class="glyphicon glyphicon-chevron-left"></span>Back
 			</a>
-			<a href="#/dics/{{dicId}}/cards/edit" id="btn-add-card" class="btn btn-primary">Add...</a>
+			<a href="#/dics/{{dicId}}/cards/new" id="btn-add-card" class="btn btn-primary">Add...</a>
 			<a href="#" id="btn-learn-dic" class="btn btn-default">Learn</a>
 			<a href="#" id="btn-reset-dic" class="btn btn-default">Reset</a>
 		</div>
@@ -11,12 +11,12 @@
 			<li class="card-item" learnt="{{card.learnt}}">
 				<div>
 					<span class="main-text">{{card.word}}</span>
-					<a href="#" style="position : absolute; right: 45px; top: 0px;" class="btn btn-default" name="edit-card">
+					<a href="#/dics/{{dicId}}/cards/edit/{{card._id}}" style="position : absolute; right: 45px; top: 0px;" class="btn btn-default" name="edit-card">
 						<span class="glyphicon glyphicon-pencil"></span>
 					</a>
-					<a href="#" style="position : absolute; right: 0px; top: 0px;" class="btn btn-danger" style="float: right;" name="delete-card">
+					<button ng-click="deleteCard(card)" style="position : absolute; right: 0px; top: 0px;" class="btn btn-danger" style="float: right;" name="delete-card">
 						<span class="glyphicon glyphicon-trash"></span>
-					</a>
+					</button>
 				</div>
 			</li>
 		</ul>
