@@ -4,7 +4,7 @@
 				<span class="glyphicon glyphicon-chevron-left"></span>Back
 			</a>		
 			<button ng-click="saveCard()" id="btn-save-card" class="btn btn-primary">Save</button>
-			<a href="#" id="btn-tr-card" class="btn btn-default">Translate</a>
+			<button ng-click="translate()" id="btn-tr-card" class="btn btn-default">Translate</button>
 		</div>
 		<div id="card" style="">
 			<label for="word">Word</label> 
@@ -14,5 +14,4 @@
 			<label for="sound">Sound</label>
 			<input type="text" id="sound" name="sound" ng-model="card.sound"/>
 		</div>
-		<div id="dicTranslation">
-		</div>
+		<div id="dicTranslation"></div>

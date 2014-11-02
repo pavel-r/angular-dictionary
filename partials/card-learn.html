@@ -10,7 +10,7 @@
 		<div id="word-container"><span class="main-text">{{card.word}}<span></div>
 		<div id="tr-container" ng-click="showTranslation()"><span id="translation" style="visibility: hidden;" class="main-text">{{card.translation}}</span></div>
 		<div class="bottom-menu">
-			<a href="#" id="learn-card" class="btn btn-primary">Learnt</a>
+			<button ng-click="learn()" id="learn-card" class="btn btn-primary">Learnt</a>
 			<button ng-click="nextCard()" id="next-card" class="btn btn-default">Next</button>
 		</div>
 		<div id="dicTranslation">

@@ -115,9 +115,18 @@ app.post('/dictionaries', function(request, response) {
 	console.log('Adding dictionary: ' + JSON.stringify(dictionary));
 	p_db.collection('dictionaries').insert(dictionary, function(err, result){
 		console.log('Dictionary added');
-		response.send('[]');
+		response.send(dictionary);
 	});
 });
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 //delete dictionary
 app.delete('/dictionaries/:id', function(request, response) {
@@ -127,7 +136,7 @@ app.delete('/dictionaries/:id', function(request, response) {
 		console.log(result + ' cards for dictionary ' + id + ' deleted');
 		p_db.collection('dictionaries').remove({_id: ObjectID(id)}, function(err, result){
 			console.log('Dictionary ' + id + ' deleted');
-			response.send('[]');
+			response.send('{}');
 		});
 	});
 });
@@ -159,6 +168,8 @@ app.post('/dictionaries/:id/learn', function(request, response) {
 		response.send("[]");
 	});
 });
+
+
 
 //get all cards for dictionary
 app.get('/dictionaries/:dic_id/cards', function (request, response) {
@@ -206,6 +217,9 @@ app.post('/dictionaries/:dic_id/cards', function(request, response) {
 app.put('/dictionaries/:dic_id/cards/:card_id', function (request, response) {
     var card_id = request.params.card_id;
 	var card = request.body;
+	if(card.hasOwnProperty("_id")){
+		delete card._id;
+	}
 	card.dictionary_id = ObjectID(card.dictionary_id);
 	console.log('Updating card ' + card_id + ': ' + JSON.stringify(card));
 	p_db.collection('cards').update({_id : ObjectID(card_id)}, {$set: card}, function(err, result){

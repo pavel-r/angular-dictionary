@@ -1,17 +1,7 @@
 var dicServices = angular.module('dicServices',['ngResource']);
 
-dicServices.factory('Dic', function($http){
-	return {
-		getAll: function(){
-			return $http.get('dictionaries');
-		},
-		delete: function(id){
-			return $http.delete('dictionaries/' + id);
-		},
-		add: function(dic){
-			return $http.post('dictionaries', dic);
-		}
-	};
+dicServices.factory('Dic', function($resource){
+	return $resource('dictionaries/:dicId', {dicId : '@_id'});
 });
 
 dicServices.factory('Card', function($http){
@@ -30,6 +20,9 @@ dicServices.factory('Card', function($http){
 		},
 		delete: function(id, dicId){
 			return $http.delete('dictionaries/+' + dicId + '/cards/' + id);
+		},
+		translate: function(card){
+			return $http.get('translate/' + card.word);
 		}
 	};
 });
