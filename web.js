@@ -262,7 +262,7 @@ app.get('/translate/:word', function (request, response){
 	http.get(options, function(resp){
 		resp.setEncoding('utf8');
 		resp.on('data', function (chunk) {
-			response.send(chunk);
+			response.send({htmlData : "" + chunk});
 		});
 	}).on('error', function(e){
 		console.log("Error requesting Lexin: " + e.message);

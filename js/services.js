@@ -11,3 +11,7 @@ dicServices.factory('Card', function($resource){
 		reset: {method:'POST', params:{cardId:'reset'}, isArray:true}
 	});
 });
+
+dicServices.factory('Translation', function($resource){
+	return $resource('translate/:word');
+});

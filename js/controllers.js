@@ -64,7 +64,7 @@ dicControllers.controller('CardLearnCtrl', function($log, $scope, $routeParams, 
 	};
 });
 
-dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $location, Card){
+dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $location, Card, Translation){
 	$scope.dicId = $routeParams.dicId;
 	$scope.card = new Card({dictionary_id: $routeParams.dicId, learnt: false});
 	$scope.saveCard = function(){
@@ -73,10 +73,10 @@ dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $l
 		});
 	};
 	$scope.translate = function(){
-		Card.translate($scope.card).success(function(translation){
-			$("#dicTranslation").html(translation);
-			$scope.card.translation = $('#dicTranslation').find('span[lang=ru_RU]').first().text();
-			$scope.card.sound = $('#dicTranslation').find('a').first().attr('href');
+		Translation.get({word: $scope.card.word}, function(translation){
+			$("#dicTranslation").html(translation.htmlData);
+			$scope.card.translation = $(translation.htmlData).find('span[lang=ru_RU]').first().text();
+			$scope.card.sound = $(translation.htmlData).find('a').first().attr('href');
 		});
 	};
 });
