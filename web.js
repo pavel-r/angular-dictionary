@@ -208,7 +208,7 @@ app.get('/dictionaries/:dic_id/cards/:card_id', function(request, response) {
 	}
 	var card_id = request.params.card_id;
 	console.log('Finding card with id ' + card_id);
-	p_db.collection('cards').findOne({_id: ObjectID(card_id)}, {"_id" : 0}, function(err, card){
+	p_db.collection('cards').findOne({_id: ObjectID(card_id)}, function(err, card){
 		console.log('Found card:' + JSON.stringify(card));
 		response.send(card);
 	});

@@ -16,6 +16,7 @@ dicControllers.controller('DicListCtrl', function($log, $scope, Dic){
 });
 
 dicControllers.controller('CardListCtrl', function($log, $scope, $routeParams, Card){
+	$scope.dicId = $routeParams.dicId;
 	$scope.cards = Card.query({dicId: $routeParams.dicId});
 	$scope.deleteCard = function(card){
 		card.$delete({}, function(){
@@ -45,19 +46,14 @@ dicControllers.controller('CardLearnCtrl', function($log, $scope, $routeParams, 
 			$("#translation").css("visibility", "hidden");
 			$scope.card = $scope.cards.pop();
 		} else {
-			resetScopeWithCards();
+			$scope.cards = Card.query({dicId: $routeParams.dicId, learnt: false}, function(cards){
+				cards.length === 0 ? $location.path('/dics') : $scope.nextCard();
+			});
 		}
 	};
-	var resetScopeWithCards = function(){
-		$scope.cards = Card.query({dicId: $routeParams.dicId, learnt: false}, function(cards){
-			if(cards.length === 0 ){
-				$location.path('/dics');
-			} else {
-				$scope.nextCard();
-			}
-		});
-	};
-	resetScopeWithCards();
+	$scope.cards = Card.query({dicId: $routeParams.dicId, learnt: false}, function(cards){
+			cards.length === 0 ? $location.path('/dics') : $scope.nextCard();
+	});
 	$scope.showTranslation = function(){
 		$("#translation").css("visibility", "visible");
 	};
@@ -70,9 +66,8 @@ dicControllers.controller('CardLearnCtrl', function($log, $scope, $routeParams, 
 
 dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $location, Card){
 	$scope.dicId = $routeParams.dicId;
-	$scope.card = new Card({dictionary_id: $routeParams.dicId});
+	$scope.card = new Card({dictionary_id: $routeParams.dicId, learnt: false});
 	$scope.saveCard = function(){
-		$log.log($scope.card);
 		$scope.card.$save({}, function(){
 			$location.path('/dics/' + $routeParams.dicId + '/cards');
 		});
@@ -87,15 +82,12 @@ dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $l
 });
 
 dicControllers.controller('CardEditCtrl', function($log, $scope, $routeParams, $location, Card){
-	$log.log('CardEditCtrl');
 	$scope.dicId = $routeParams.dicId;
-	$scope.card = Card.get($routeParams.cardId, $routeParams.dicId).success(function(card){
-		$scope.card = card;
-		$scope.saveCard = function(){
-			$log.log($scope.card);
-			Card.update($routeParams.cardId, $scope.card).success(function(){
-				$location.path('/dics/' + $routeParams.dicId + '/cards');
-			});
-		};
-	});
+	$scope.card = Card.get({cardId: $routeParams.cardId, dicId: $routeParams.dicId});
+	$scope.saveCard = function(){
+		$log.log($scope.card);
+		$scope.card.$update({}, function(){
+			$location.path('/dics/' + $routeParams.dicId + '/cards');
+		});
+	};
 });
