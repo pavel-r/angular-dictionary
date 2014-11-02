@@ -179,20 +179,32 @@ app.get('/dictionaries/:dic_id/cards', function (request, response) {
 		return "[]";
 	}
 	var dic_id = request.params.dic_id;
-	console.log('Getting all cards for dictionary ' + dic_id);
 	//TODO: check for proper rights for this dictionary
-	p_db.collection('cards').find({dictionary_id : ObjectID(dic_id)}).sort({word : 1}).toArray(function(err, cards){
+	console.log(request.query);
+	var searchParams = processQueryParams(request.query);
+	searchParams.dictionary_id = ObjectID(dic_id);
+	console.log("Search cards: " + JSON.stringify(searchParams));
+	p_db.collection('cards').find(searchParams).sort({word : 1}).toArray(function(err, cards){
 		console.log('Cards found: ' + JSON.stringify(cards));
 		response.send(cards);
 	});
 });
+
+function processQueryParams(query){
+	var returnObj = {};
+	if(query.hasOwnProperty("learnt")){
+		returnObj.learnt = (query.learnt === "true");
+	}
+	return returnObj;
+	//TODO: check other allowed params
+}
 
 //get card by id
 app.get('/dictionaries/:dic_id/cards/:card_id', function(request, response) {
 	var userId = request.session.userid;
 	if(!userId){
 		console.log('User is not logged in!');
-		return "[]";
+		return "{}";
 	}
 	var card_id = request.params.card_id;
 	console.log('Finding card with id ' + card_id);
@@ -209,7 +221,7 @@ app.post('/dictionaries/:dic_id/cards', function(request, response) {
 	console.log('Adding card ' + JSON.stringify(card) +' for dictionary ' + card.dictionary_id);	
 	p_db.collection('cards').insert(card, function(err, result){
 		console.log('Card added');
-		response.send("[]");
+		response.send(card);
 	});
 });
 
@@ -225,10 +237,8 @@ app.put('/dictionaries/:dic_id/cards/:card_id', function (request, response) {
 	p_db.collection('cards').update({_id : ObjectID(card_id)}, {$set: card}, function(err, result){
 		if(err){
 			console.log(err);
-		} else {
-			console.log("Cards updated");
 		}
-		response.send("[]");
+		response.send("");
 	});
 });
 
@@ -238,7 +248,7 @@ app.delete('/dictionaries/:dic_id/cards/:card_id', function(request, response) {
 	console.log('Deleting card ' + card_id);
 	p_db.collection('cards').remove({_id: ObjectID(card_id)}, function(err, result){
 		console.log('Card deleted');
-		response.send('[]');
+		response.send('{}');
 	});
 });
 
@@ -252,8 +262,6 @@ app.get('/translate/:word', function (request, response){
 	http.get(options, function(resp){
 		resp.setEncoding('utf8');
 		resp.on('data', function (chunk) {
-			//var card = parseTranslation(chunk);
-			//card.word = word;
 			response.send(chunk);
 		});
 	}).on('error', function(e){
@@ -265,10 +273,6 @@ app.get('/translate/:word', function (request, response){
 //*************START APPLICATION**********************************
 
 var port = process.env.PORT || 5000;
-http.createServer(app).listen(port);
-
-/*
-app.listen(port, function(){
-    console.log('Server started on port ' + port);
+http.createServer(app).listen(port, function(){
+	console.log('Http Server started on port ' + port);
 });
-*/

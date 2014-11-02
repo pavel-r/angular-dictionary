@@ -4,47 +4,37 @@ dicControllers.controller('DicListCtrl', function($log, $scope, Dic){
 	$scope.dics = Dic.query();
 	$scope.addDictionary = function(){
 		var newDic = new Dic({name: $scope.newDicName});
-		newDic.$save();
-		$scope.dics = Dic.query();
+		newDic.$save({},function(){
+			$scope.dics = Dic.query();
+		});
 	};
 	$scope.deleteDictionary = function(dic){
-		dic.$delete();
-		$scope.dics = Dic.query();
+		dic.$delete({},function(){
+			$scope.dics = Dic.query();
+		});
 	};
 });
 
-dicControllers.controller('CardListCtrl', function($scope, $routeParams, Card, Dic){
-	$scope.dicId = $routeParams.dicId;
-	Card.getByDicId($routeParams.dicId).success(function(cards){
-		$scope.cards = cards;
-	});
+dicControllers.controller('CardListCtrl', function($log, $scope, $routeParams, Card){
+	$scope.cards = Card.query({dicId: $routeParams.dicId});
 	$scope.deleteCard = function(card){
-		Card.delete(card._id, card.dictionary_id).success(function(){
-			Card.getByDicId($routeParams.dicId).success(function(cards){
-				$scope.cards = cards;
-			});
-		});
-	};
-	$scope.learnAll = function(){
-		Dic.learnAll($routeParams.dicId).success(function(){
-			Card.getByDicId($routeParams.dicId).success(function(cards){
-				$scope.cards = cards;
-			});
-		});
-	};
-	$scope.reset = function(){
-		Dic.reset($routeParams.dicId).success(function(){
-			Card.getByDicId($routeParams.dicId).success(function(cards){
-				$scope.cards = cards;
-			});
+		card.$delete({}, function(){
+			$scope.cards = Card.query({dicId: $routeParams.dicId});
 		});
 	};
 	$scope.toggleCard = function(card){
 		card.learnt = !card.learnt;
-		Card.update(card._id, card).success(function(){
-			Card.getByDicId($routeParams.dicId).success(function(cards){
-				$scope.cards = cards;
-			});
+		card.$update();
+	};
+	$scope.learnAll = function(){
+		$log.log("Mark all learnt for: " + $routeParams.dicId);
+		Card.learnAll({dicId: $routeParams.dicId}, function(){
+			$scope.cards = Card.query({dicId: $routeParams.dicId});
+		});
+	};
+	$scope.reset = function(){
+		Card.reset({dicId: $routeParams.dicId}, function(){
+			$scope.cards = Card.query({dicId: $routeParams.dicId});
 		});
 	};
 });
@@ -59,9 +49,8 @@ dicControllers.controller('CardLearnCtrl', function($log, $scope, $routeParams, 
 		}
 	};
 	var resetScopeWithCards = function(){
-		Card.getByDicId($routeParams.dicId).success(function(cards){
-			$scope.cards = _.shuffle(_.filter(cards , function(card) {return !card.learnt;}));
-			if($scope.cards.length === 0 ){
+		$scope.cards = Card.query({dicId: $routeParams.dicId, learnt: false}, function(cards){
+			if(cards.length === 0 ){
 				$location.path('/dics');
 			} else {
 				$scope.nextCard();
@@ -74,17 +63,17 @@ dicControllers.controller('CardLearnCtrl', function($log, $scope, $routeParams, 
 	};
 	$scope.learn = function(){
 		$scope.card.learnt = true;
-		Card.update($scope.card._id, $scope.card);
+		$scope.card.$update();
 		$scope.nextCard();
 	};
 });
 
 dicControllers.controller('CardAddCtrl', function($log, $scope, $routeParams, $location, Card){
 	$scope.dicId = $routeParams.dicId;
-	$scope.card = {dictionary_id: $routeParams.dicId};
+	$scope.card = new Card({dictionary_id: $routeParams.dicId});
 	$scope.saveCard = function(){
 		$log.log($scope.card);
-		Card.save($scope.card).success(function(){
+		$scope.card.$save({}, function(){
 			$location.path('/dics/' + $routeParams.dicId + '/cards');
 		});
 	};
